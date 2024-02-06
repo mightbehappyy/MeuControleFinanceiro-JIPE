@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "TB_USERS")
 @Entity
 public class User implements Serializable {
     @Id
@@ -21,6 +21,7 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private float budget;
-    @OneToMany(mappedBy = "user")
-    private List<Item> itemList;
+    @OneToMany
+    private List<Spending> spendings;
+
 }
