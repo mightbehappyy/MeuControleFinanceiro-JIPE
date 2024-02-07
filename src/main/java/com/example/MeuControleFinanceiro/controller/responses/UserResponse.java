@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public class UserResponse {
-    private String userName;
+    private String email;
     private float budget;
     public UserResponse(User user) {
-        this.userName = user.getUserName();
+        this.email = user.getEmail();
         this.budget = user.getBudget();
     }
 }

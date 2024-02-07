@@ -7,21 +7,20 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Table(name = "TB_USERS")
 @Entity
 public class User implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
     private String email;
-    private String userName;
     private String password;
     private float budget;
     @OneToMany
-    private List<Spending> spendings;
+    private List<Expense> expenses;
+    @OneToMany
+    private List<Category> categories;
 
 }

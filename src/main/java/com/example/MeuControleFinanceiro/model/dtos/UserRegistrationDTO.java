@@ -1,6 +1,6 @@
 package com.example.MeuControleFinanceiro.model.dtos;
 
-import com.example.MeuControleFinanceiro.model.Spending;
+import com.example.MeuControleFinanceiro.model.Expense;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ public class UserRegistrationDTO {
     private String userName;
     private String password;
     private float budget;
-    private List<Spending> spendings;
+    private List<Expense> expenses;
 
     public UserRegistrationDTO(String email, String userName, String password) {
         this.email = email;
         this.userName = userName;
         this.password = password;
         this.budget = 0;
-        this.spendings = new ArrayList<>();
+        this.expenses = new ArrayList<>();
     }
 }

@@ -6,13 +6,11 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
-
 @Getter
 @Setter
 @Entity
 @Table(name = "TB_SPENDING")
-public class Spending {
+public class Expense {
 
     private String title;
     private float cost;
