@@ -5,6 +5,7 @@ import com.example.MeuControleFinanceiro.model.User;
 import com.example.MeuControleFinanceiro.model.dtos.UserRegistrationDTO;
 import com.example.MeuControleFinanceiro.repository.UserRepository;
 import com.example.MeuControleFinanceiro.utils.exceptions.AccountNotDeletedException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -18,21 +19,21 @@ public class UserService {
 
     public User createUser(UserRegistrationDTO userRegistrationDTO) {
         User userModel = new User();
-
-        BeanUtils.copyProperties(userRegistrationDTO, userModel);
-        return userRepository.save(userModel);
+        if (userRepository.findByEmail(userRegistrationDTO.getEmail()).isEmpty()) {
+            BeanUtils.copyProperties(userRegistrationDTO, userModel);
+            return userRepository.save(userModel);
+        } else {
+            throw new AccountNotDeletedException("Usuário já cadastrado");
+        }
     }
 
-    public ResponseEntity<String> deleteUser(UserRegistrationDTO userRegistrationDTO) {
-        User userOptional = userRepository
-                .findById(userRegistrationDTO.getEmail())
-                .orElseThrow(() -> new AccountNotDeletedException("Account deletion gone wrong"));
+    public ResponseEntity<String> deleteUser(Long id) {
+        userRepository
+                .findById(id)
+                .orElseThrow(() -> new AccountNotDeletedException("Essa conta não existe"));
 
-        if(!userOptional.getPassword().equals(userRegistrationDTO.getPassword())) {
-            throw new AccountNotDeletedException("Account deletion gone wrong");
-        }
-        userRepository.deleteById(userRegistrationDTO.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body("Account deleted");
+        userRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Conta deletada");
     }
 
 

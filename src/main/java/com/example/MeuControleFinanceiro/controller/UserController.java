@@ -9,19 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    @PostMapping("/criar-usuario")
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new UserResponse(userService.createUser(userRegistrationDTO)));
     }
-    @DeleteMapping("/deletar-usuario")
-    public ResponseEntity<?> deleteUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(userRegistrationDTO));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id));
     }
 
 }
