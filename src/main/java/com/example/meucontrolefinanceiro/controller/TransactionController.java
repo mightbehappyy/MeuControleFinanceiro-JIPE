@@ -1,4 +1,4 @@
-package com.example.MeuControleFinanceiro.controller;
+package com.example.meucontrolefinanceiro.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

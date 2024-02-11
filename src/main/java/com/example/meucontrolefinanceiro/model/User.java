@@ -1,4 +1,4 @@
-package com.example.MeuControleFinanceiro.model;
+package com.example.meucontrolefinanceiro.model;
 
 
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.example.MeuControleFinanceiro;
+package com.example.meucontrolefinanceiro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

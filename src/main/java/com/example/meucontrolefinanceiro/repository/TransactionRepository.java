@@ -1,6 +1,6 @@
-package com.example.MeuControleFinanceiro.repository;
+package com.example.meucontrolefinanceiro.repository;
 
-import com.example.MeuControleFinanceiro.model.Transaction;
+import com.example.meucontrolefinanceiro.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

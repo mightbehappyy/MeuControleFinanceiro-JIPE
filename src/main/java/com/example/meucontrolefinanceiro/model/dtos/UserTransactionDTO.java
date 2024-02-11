@@ -1,6 +1,6 @@
-package com.example.MeuControleFinanceiro.model.dtos;
+package com.example.meucontrolefinanceiro.model.dtos;
 
-import com.example.MeuControleFinanceiro.model.Transaction;
+import com.example.meucontrolefinanceiro.model.Transaction;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
