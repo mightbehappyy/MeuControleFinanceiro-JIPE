@@ -10,9 +10,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "TB_CATEGORY")
 public class Category {
-    private String name;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
+    private String name;
+
     @ManyToOne
     private User user;
 }

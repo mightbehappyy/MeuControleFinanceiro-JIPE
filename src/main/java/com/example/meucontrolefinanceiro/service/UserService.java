@@ -33,6 +33,12 @@ public class UserService {
                 .orElseThrow(() -> new AccountNotFound("Conta não encontrada"));
     }
 
+    public User findUserById(Long id) {
+        return userRepository
+            .findById(id)
+            .orElseThrow(() -> new AccountNotFound("Conta não encontrada"));
+    }
+
     public void updateUserEmail(String oldEmail, String newEmail) {
         User userModel = findUserByEmail(oldEmail);
         userModel.setEmail(newEmail);
