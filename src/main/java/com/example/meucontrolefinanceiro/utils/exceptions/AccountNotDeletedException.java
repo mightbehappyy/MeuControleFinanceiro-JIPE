@@ -1,4 +1,4 @@
-package com.example.MeuControleFinanceiro.utils.exceptions;
+package com.example.meucontrolefinanceiro.utils.exceptions;
 
 public class AccountNotDeletedException extends RuntimeException{
 

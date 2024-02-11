@@ -1,4 +1,4 @@
-package com.example.MeuControleFinanceiro.model.dtos;
+package com.example.meucontrolefinanceiro.model.dtos;
 
 import lombok.*;
 

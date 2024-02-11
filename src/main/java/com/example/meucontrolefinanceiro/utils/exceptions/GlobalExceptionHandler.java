@@ -1,7 +1,7 @@
-package com.example.MeuControleFinanceiro.utils.exceptions;
+package com.example.meucontrolefinanceiro.utils.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,4 +18,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleAccountNotFound(AccountNotFound ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<Object> handleInvalidEmail(InvalidEmailException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    @ExceptionHandler(ExistentAccountException.class)
+    public ResponseEntity<Object> handleExistentAccount(ExistentAccountException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+
 }

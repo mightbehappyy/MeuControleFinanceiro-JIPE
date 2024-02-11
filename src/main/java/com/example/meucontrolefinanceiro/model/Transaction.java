@@ -1,6 +1,6 @@
-package com.example.MeuControleFinanceiro.model;
+package com.example.meucontrolefinanceiro.model;
 
-import com.example.MeuControleFinanceiro.model.enums.TransactionEnum;
+import com.example.meucontrolefinanceiro.model.enums.TransactionEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
