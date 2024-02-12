@@ -25,6 +25,11 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(ExistentAccountException.class)
     public ResponseEntity<Object> handleExistentAccount(ExistentAccountException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFound(CategoryNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
