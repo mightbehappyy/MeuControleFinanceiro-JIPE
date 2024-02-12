@@ -1,5 +1,6 @@
 package com.example.meucontrolefinanceiro.controller;
 
+import com.example.meucontrolefinanceiro.model.dtos.TransactionFilterDateDTO;
 import com.example.meucontrolefinanceiro.model.dtos.UserTransactionDTO;
 import com.example.meucontrolefinanceiro.model.enums.TransactionEnum;
 import com.example.meucontrolefinanceiro.service.TransactionService;
@@ -32,5 +33,24 @@ public class TransactionController {
   @GetMapping("/type/{type}")
   public ResponseEntity<?> findTransactionByType(@PathVariable("type") TransactionEnum type) {
     return ResponseEntity.status(HttpStatus.OK).body(transactionService.findByType(type));
+  }
+
+  @GetMapping("/daterange")
+  public ResponseEntity<?> findTransactionByDateRange(
+      @RequestBody TransactionFilterDateDTO transactionFilterDateDTO
+  ) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(transactionService.findByDateRange(transactionFilterDateDTO));
+  }
+
+  @GetMapping("/daterange/{type}")
+  public ResponseEntity<?> findTransactionByDateRangeAndType(
+      @RequestBody TransactionFilterDateDTO transactionFilterDateDTO,
+      @PathVariable("type") TransactionEnum type
+  ) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(transactionService.findByDateRangeAndType(transactionFilterDateDTO, type));
   }
 }
