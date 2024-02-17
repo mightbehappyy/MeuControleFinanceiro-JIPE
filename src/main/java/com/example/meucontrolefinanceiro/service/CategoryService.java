@@ -4,8 +4,9 @@ import com.example.meucontrolefinanceiro.model.Category;
 import com.example.meucontrolefinanceiro.model.User;
 import com.example.meucontrolefinanceiro.model.dtos.UserCategoryDTO;
 import com.example.meucontrolefinanceiro.repository.CategoryRepository;
-import com.example.meucontrolefinanceiro.utils.exceptions.AccountNotFound;
 import com.example.meucontrolefinanceiro.utils.exceptions.CategoryNotFoundException;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +31,11 @@ public class CategoryService {
     return categoryRepository
         .findByNameAndUserId(name, user_id)
         .orElseThrow(() -> new CategoryNotFoundException("Categoria não foi encontrada"));
+  }
+
+  public List<Category> findAllCategoriesByEmail(String email) {
+    userService.findUserByEmail(email);
+    return categoryRepository.findAllByUserEmail(email);
   }
 
   public Category findCategoryById(Long id) {
