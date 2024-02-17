@@ -31,6 +31,11 @@ public class CategoryController {
     return ResponseEntity.status(HttpStatus.OK).body(categoryService.findCategoryByNameAndUserId(name, user_id));
   }
 
+  @GetMapping("user/{email}")
+  public ResponseEntity<?> findAllCategoriesByName(@PathVariable("email") String email) {
+    return ResponseEntity.ok(categoryService.findAllCategoriesByEmail(email));
+  }
+
   @GetMapping("/{id}")
   public ResponseEntity<?> findCategoryById(@PathVariable("id") Long id) {
     return ResponseEntity.status(HttpStatus.OK).body(categoryService.findCategoryById(id));
