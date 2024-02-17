@@ -1,5 +1,6 @@
 package com.example.meucontrolefinanceiro.controller;
 
+import com.example.meucontrolefinanceiro.controller.responses.ApiResponse;
 import com.example.meucontrolefinanceiro.controller.responses.UserResponse;
 import com.example.meucontrolefinanceiro.model.dtos.UserRegistrationDTO;
 import com.example.meucontrolefinanceiro.model.dtos.UserUpdateDTO;
@@ -24,7 +25,7 @@ public class UserController {
     @PatchMapping
     public ResponseEntity<?> updateUserEmail(@RequestBody UserUpdateDTO userUpdateDTO) {
         userService.updateUserEmail(userUpdateDTO.getOldEmail(), userUpdateDTO.getNewEmail());
-        return ResponseEntity.status(HttpStatus.OK).body("Usuário atualizado");
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Usuário atualizado"));
     }
 
     @GetMapping("/{email}")
@@ -35,8 +36,6 @@ public class UserController {
     @DeleteMapping("/{email}")
     public ResponseEntity<?> deleteUserByEmail(@PathVariable("email") String email) {
         userService.deleteUserByEmail(email);
-        return ResponseEntity.status(HttpStatus.OK).body("Conta deletada");
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Conta deletada"));
     }
-
-
 }
