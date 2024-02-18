@@ -18,14 +18,11 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## Sobre o Projeto
 
 Meu Controle Financeiro é uma [skill](https://www.amazon.com.br/gp/help/customer/display.html?nodeId=GG3RZLAA3RH83JAA) da Alexa que possibilita o gerenciamento de finanças por meio de simples comandos de voz. De maneira rápida e conveniente o usuário pode definir um orçamento para o mês e adicionar gastos realizados no dia-a-dia podendo classifica-los dentro destas categorias que o próprio usuário criará. Uma vez definido seu orçamento é possível resgatar o quanto resta para o limite do orçamento e também pode ser alertado quando ultrapassar o limite estabelecido. A skill facilita o processo de gereciamento de finanças visto que todas estas informações estão tão próximas quanto um comando de voz tudo graças a tecnologia da Alexa. O repositório em questão se trata do back-end do projeto, este faz a comunicação com o banco de dado, resgata e registra informações de requisições vindas da Alexa.
 
 
-
-<p align="right"><a href="#readme-top" align="right"><img src="https://i.imgur.com/YI1cy4w.png" style="height: 20px"></img></a></p>
 
 
 
@@ -36,11 +33,8 @@ Meu Controle Financeiro é uma [skill](https://www.amazon.com.br/gp/help/custome
 ![Postgres](https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=for-the-badge&logo=PostgreSQL&logoColor=white)
 
 
-<p align="right"><a href="#readme-top" align="right"><img src="https://i.imgur.com/YI1cy4w.png" style="height: 20px"></img></a></p>
 
 
-
-<!-- GETTING STARTED -->
 ## Configuração do ambiente de desenvolvimento
 
 
@@ -62,7 +56,6 @@ DATABASE_USERNAME
 ```
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## Autores
