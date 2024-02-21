@@ -1,16 +1,16 @@
 package com.example.meucontrolefinanceiro.model.dtos;
 
-import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionFilterDateDTO {
-  private Date dateStart;
-  private Date dateEnd;
-  private Long user_id;
-  private String email;
+public class UserMonthlySpendingDTO {
+    private Date currentDate;
+    private String userEmail;
 }
