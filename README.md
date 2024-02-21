@@ -54,6 +54,137 @@ DATABASE_PASSWORD
 DATABASE_URL
 DATABASE_USERNAME
 ```
+## Como usar
+Esta secção é dedicada a instrução de como utilizar a API do Meu Controle Financeiro pelo lado do cliente (Alexa).
+Os endpoints serão descritos logo abaixo como também o formato de suas entradas.
+
+Convenções:
+- @RequestBody: Indica que naquele exemplo, está sendo usado um JSON no BODY da requisição
+- @PathVariable: Indica que naquele exemplo, está sendo usada uma variável no HEADER da requisição
+
+#### URL da API em produção
+````
+https://meu-controle-financeiro-161352531094.herokuapp.com
+````
+### Usuário
+>#### `POST` Endpoint Criar usuário
+>```
+>/api/user 
+>```
+>Exemplo de utilização
+> 
+>###### @RequestBody
+>```
+>{
+>  "email": "testeCategoria@gmail.com"
+>}
+>```
+
+>#### `DELETE` Endpoint Deletar usuário
+>```
+>/api/user/{email} 
+>```
+>Exemplo de utilização
+>
+>###### @PathVariable 
+>```
+>/api/user/"testeCategoria@gmail.com" 
+>```
+
+>#### `PATCH` Endpoint Atualizar email do usuário
+>```
+>/api/user/
+>```
+>Exemplo de utilização
+>
+>###### @RequestBody
+>```
+>{
+>"oldEmail" : "testeCategoria@gmail.com",
+>"newEmail" : "food3@gmail.com.br"
+>}
+>```
+
+>#### `GET` Endpoint Encontrar um usuário por e-mail
+>
+> ```
+> /api/user/{email}
+> ```
+> Exemplo de utilização
+>
+> ###### @PathVariable
+> ```
+> /api/user/testeCategoria@gmail.com
+> ```
+
+
+### Categorias
+
+>#### `GET` Endpoint encontrar todas as categorias de um usuário
+>```
+>/api/category/user/{email}
+>```
+>Exemplo de utilização
+>
+>###### @PathVariable
+>```
+>/api/category/user/testeCategoria@gmail.com
+>```
+
+>#### `POST` Endpoint Criar categoria
+>
+> ```
+> /api/category
+> ```
+> Exemplo de utilização
+>
+> ###### @RequestBody
+> ```
+> {
+>	"name": "categoria3",
+>	"email": "testeCategoria@gmail.com"
+> }
+> ```
+
+### Transação
+>#### `POST` Endpoint Adicionar transação
+>
+> ```
+> /api/transaction
+> ```
+> Exemplo de utilização
+>
+> ###### @RequestBody
+> ```
+> {
+> "title": "Biscoito super mega hiper caro",
+> "cost": 30000.0,
+> "date": "2023-02-05T10:36:40-03:00",
+> "type": "EXPENSE",
+> "category": "categoria",
+> "email": "testeCategoria@gmail.com"
+> }
+> ```
+
+>#### `GET` Endpoint Encontrar gasto mensal
+>
+> ```
+> /api/transaction
+> ```
+> Exemplo de utilização
+>
+> ###### @RequestBody
+> ```
+> {
+> "currentDate": "2023-02-02T10:36:40-03:00",
+> "userEmail": "testeCategoria@gmail.com"
+> }
+> ```
+
+
+
+
+
 
 ## Requisitos
 
@@ -102,6 +233,7 @@ que foi gasto e em que categoria esse se encontra
 - [ ] RF 005
 - [ ] RF 006
 - [x] RF 007
+
 ## Autores
 
 
