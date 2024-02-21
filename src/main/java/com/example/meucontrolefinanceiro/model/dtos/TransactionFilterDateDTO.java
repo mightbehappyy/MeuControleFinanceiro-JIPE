@@ -12,5 +12,4 @@ public class TransactionFilterDateDTO {
   private Date dateStart;
   private Date dateEnd;
   private Long user_id;
-  private String email;
 }
