@@ -30,7 +30,8 @@ public class UserController {
 
     @GetMapping("/{email}")
     public ResponseEntity<?> findUserByEmail(@PathVariable("email") String email) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findUserByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new UserResponse(userService.findUserByEmail(email)));
     }
 
     @DeleteMapping("/{email}")
