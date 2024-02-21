@@ -77,7 +77,7 @@ public class TransactionService {
                 .filter(transaction -> transaction.getType().equals(TransactionEnum.INCOME))
                 .map(Transaction::getCost).reduce(0.0f, Float::sum);
 
-        float total = expense - income;
+        float total = income - expense;
 
         return new UserMonthlySpendingResponse(total, userMonthlySpendingDTO.getUserEmail());
     }
