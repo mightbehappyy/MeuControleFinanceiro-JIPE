@@ -64,18 +64,18 @@ DATABASE_USERNAME
 
 **[2. Endpoints-Usuário](#usuário)**
 
-- **[2.1 Criar Usuário](#post-endpoint-criar-usuário)**
+- **[2.1 Criar Usuário](#post-criar-usuário)**
 - **[2.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
-- **[2.3 Atualizar email do usuário](#patch-endpoint-atualizar-email-do-usuário)**
-- **[2.1 Encontrar usuário por e-mail](#get-endpoint-encontrar-um-usuário-por-e-mail)**
+- **[2.3 Atualizar email do usuário](#patch-atualizar-email-do-usuário)**
+- **[2.1 Encontrar usuário por e-mail](#get-encontrar-um-usuário-por-e-mail)**
 
 **[3. Endpoints-Categorias](#categorias)**
-- **[3.1 Encontrar categorias por e-mail](#get-endpoint-encontrar-todas-as-categorias-de-um-usuário)**
-- **[3.2 Criar categoria](#post-endpoint-criar-categoria)**
+- **[3.1 Encontrar categorias por e-mail](#get-encontrar-todas-as-categorias-de-um-usuário)**
+- **[3.2 Criar categoria](#post-criar-categoria)**
 
 **[4. Endpoints-Transação](#transação)**
-- **[4.1 Criar transação](#post-endpoint-adicionar-transação)**
-- **[4.2 Gasto mensal](#get-endpoint-encontrar-gasto-mensal)**
+- **[4.1 Criar transação](#post-adicionar-transação)**
+- **[4.2 Gasto mensal](#get-encontrar-gasto-mensal)**
 
 Esta secção é dedicada a instrução de como utilizar a API do Meu Controle Financeiro pelo lado do cliente (Alexa).
 Os endpoints serão descritos logo abaixo como também o formato de suas entradas.
