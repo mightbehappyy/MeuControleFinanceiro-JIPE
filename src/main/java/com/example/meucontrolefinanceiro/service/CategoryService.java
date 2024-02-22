@@ -7,7 +7,6 @@ import com.example.meucontrolefinanceiro.repository.CategoryRepository;
 import com.example.meucontrolefinanceiro.utils.exceptions.CategoryNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,10 +26,10 @@ public class CategoryService {
     return categoryRepository.save(categoryModel);
   }
 
-  public Category findCategoryByNameAndUserId(String name, Long user_id) {
+  public List<Category> findCategoryByNameAndUserId(String name, Long user_id) {
     return categoryRepository
-        .findByNameAndUserId(name, user_id)
-        .orElseThrow(() -> new CategoryNotFoundException("Categoria não foi encontrada"));
+        .findAllByNameAndUserId(name, user_id);
+        //.orElseThrow(() -> new CategoryNotFoundException("Categoria não foi encontrada"));
   }
 
   public List<Category> findAllCategoriesByEmail(String email) {
