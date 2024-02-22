@@ -1,4 +1,10 @@
-![teste](https://github.com/mightbehappyy/MeuControleFinanceiro-JIPE/assets/97134972/d3d2df9f-7564-4f39-ad42-a566c6e24fba)
+
+<h1 align="center">
+  <br>
+  <a href=""><img src="https://i.imgur.com/faHDgpK.png" alt="MCF" width="600"></a>
+  <br>
+  <br>
+</h1>
 
 <br />
 <div align="center">
