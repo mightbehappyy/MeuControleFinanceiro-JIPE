@@ -91,7 +91,13 @@ public class TransactionService {
 
         float total = income - expense;
 
-        return new UserMonthlySpendingResponse(total, income, expense, userMonthlySpendingDTO.getUserEmail(), user.getBudget());
+        return new UserMonthlySpendingResponse(
+            total,
+            income,
+            expense,
+            userMonthlySpendingDTO.getUserEmail(),
+            user.getBudget()
+        );
     }
 
     public List<Transaction> findByDateRange(TransactionFilterDateDTO transactionFilterDateDTO) {
