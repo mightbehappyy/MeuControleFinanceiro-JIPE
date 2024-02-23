@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-  Optional<Category> findByNameAndUserId(String name, Long user_id);
+  List<Category> findAllByNameAndUserId(String name, Long user_id);
   List<Category> findAllByUserEmail(String email);
   void deleteAllByUserEmail(String email);
 }
