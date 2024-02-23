@@ -11,11 +11,13 @@ import com.example.meucontrolefinanceiro.model.enums.TransactionEnum;
 import com.example.meucontrolefinanceiro.repository.CategoryRepository;
 import com.example.meucontrolefinanceiro.repository.TransactionRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @RequiredArgsConstructor
@@ -66,10 +68,10 @@ public class TransactionService {
         return transactionRepository.findByType(type);
     }
 
-    public UserMonthlySpendingResponse findMonthTransactions(UserMonthlySpendingDTO userMonthlySpendingDTO) {
-        User user = userService.findUserByEmail(userMonthlySpendingDTO.getUserEmail());
+    public UserMonthlySpendingResponse findMonthTransactions(Date currentDate, String email) {
+        User user = userService.findUserByEmail(email);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(userMonthlySpendingDTO.getCurrentDate());
+        cal.setTime(currentDate);
 
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
@@ -79,7 +81,7 @@ public class TransactionService {
         Date lastDay = new GregorianCalendar(year, month, lastDayValue).getTime();
 
         List<Transaction> transactionList = transactionRepository
-                .findAllByDateBetweenAndUserEmail(firstDay, lastDay, userMonthlySpendingDTO.getUserEmail());
+                .findAllByDateBetweenAndUserEmail(firstDay, lastDay, email);
 
         float expense = transactionList.stream()
                 .filter(transaction -> transaction.getType().equals(TransactionEnum.EXPENSE))
@@ -95,30 +97,32 @@ public class TransactionService {
             total,
             income,
             expense,
-            userMonthlySpendingDTO.getUserEmail(),
+            email,
             user.getBudget()
         );
     }
 
-    public List<Transaction> findByDateRange(TransactionFilterDateDTO transactionFilterDateDTO) {
-        User user = userService.findUserByEmail(transactionFilterDateDTO.getEmail());
+    public List<Transaction> findByDateRange(Date dateStart, Date dateEnd, String email) {
+        User user = userService.findUserByEmail(email);
 
         return transactionRepository.findAllByDateBetweenAndUserId(
-                transactionFilterDateDTO.getDateStart(),
-                transactionFilterDateDTO.getDateEnd(),
+                dateStart,
+                dateEnd,
                 user.getId()
         );
     }
 
     public List<Transaction> findByDateRangeAndType(
-            TransactionFilterDateDTO transactionFilterDateDTO,
+            Date dateStart,
+            Date dateEnd,
+            String email,
             TransactionEnum type
     ) {
-        User user = userService.findUserByEmail(transactionFilterDateDTO.getEmail());
+        User user = userService.findUserByEmail(email);
 
         return transactionRepository.findAllByDateBetweenAndUserIdAndType(
-                transactionFilterDateDTO.getDateStart(),
-                transactionFilterDateDTO.getDateEnd(),
+                dateStart,
+                dateEnd,
                 user.getId(),
                 type
         );
