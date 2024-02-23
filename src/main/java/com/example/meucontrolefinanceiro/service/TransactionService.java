@@ -83,11 +83,12 @@ public class TransactionService {
     }
 
     public List<Transaction> findByDateRange(TransactionFilterDateDTO transactionFilterDateDTO) {
+        User user = userService.findUserByEmail(transactionFilterDateDTO.getEmail());
 
         return transactionRepository.findAllByDateBetweenAndUserId(
                 transactionFilterDateDTO.getDateStart(),
                 transactionFilterDateDTO.getDateEnd(),
-                transactionFilterDateDTO.getUser_id()
+                user.getId()
         );
     }
 
@@ -95,11 +96,12 @@ public class TransactionService {
             TransactionFilterDateDTO transactionFilterDateDTO,
             TransactionEnum type
     ) {
+        User user = userService.findUserByEmail(transactionFilterDateDTO.getEmail());
 
         return transactionRepository.findAllByDateBetweenAndUserIdAndType(
                 transactionFilterDateDTO.getDateStart(),
                 transactionFilterDateDTO.getDateEnd(),
-                transactionFilterDateDTO.getUser_id(),
+                user.getId(),
                 type
         );
     }
