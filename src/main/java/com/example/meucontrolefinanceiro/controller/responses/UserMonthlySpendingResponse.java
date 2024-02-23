@@ -8,5 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UserMonthlySpendingResponse {
     private final float spending;
+    private final float incomes;
+    private final float expenses;
     private final String userEmail;
+    private final float userBudget;
+
 }

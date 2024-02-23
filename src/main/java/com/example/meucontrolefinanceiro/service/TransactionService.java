@@ -67,7 +67,7 @@ public class TransactionService {
     }
 
     public UserMonthlySpendingResponse findMonthTransactions(UserMonthlySpendingDTO userMonthlySpendingDTO) {
-        userService.findUserByEmail(userMonthlySpendingDTO.getUserEmail());
+        User user = userService.findUserByEmail(userMonthlySpendingDTO.getUserEmail());
         Calendar cal = Calendar.getInstance();
         cal.setTime(userMonthlySpendingDTO.getCurrentDate());
 
@@ -91,7 +91,7 @@ public class TransactionService {
 
         float total = income - expense;
 
-        return new UserMonthlySpendingResponse(total, userMonthlySpendingDTO.getUserEmail());
+        return new UserMonthlySpendingResponse(total, income, expense, userMonthlySpendingDTO.getUserEmail(), user.getBudget());
     }
 
     public List<Transaction> findByDateRange(TransactionFilterDateDTO transactionFilterDateDTO) {
