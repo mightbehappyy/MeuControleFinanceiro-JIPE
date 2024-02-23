@@ -241,7 +241,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > {
 >    "dateStart": "2018-09-28T10:36:40-03:00",
 >    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "user_id": 1
+>    "email": "email@email.com"
 > }
 > ```
 
@@ -261,7 +261,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > {
 >    "dateStart": "2018-09-28T10:36:40-03:00",
 >    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "user_id": 1
+>    "email": "email@email.com"
 > }
 > ```
 
