@@ -3,7 +3,8 @@ package com.example.meucontrolefinanceiro.controller;
 import com.example.meucontrolefinanceiro.controller.responses.ApiResponse;
 import com.example.meucontrolefinanceiro.controller.responses.UserResponse;
 import com.example.meucontrolefinanceiro.model.dtos.UserRegistrationDTO;
-import com.example.meucontrolefinanceiro.model.dtos.UserUpdateDTO;
+import com.example.meucontrolefinanceiro.model.dtos.UserUpdateBudgetDTO;
+import com.example.meucontrolefinanceiro.model.dtos.UserUpdateEmailDTO;
 import com.example.meucontrolefinanceiro.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,16 @@ public class UserController {
                 .body(new UserResponse(userService.createUser(userRegistrationDTO)));
     }
 
-    @PatchMapping
-    public ResponseEntity<?> updateUserEmail(@RequestBody UserUpdateDTO userUpdateDTO) {
-        userService.updateUserEmail(userUpdateDTO.getOldEmail(), userUpdateDTO.getNewEmail());
+    @PatchMapping("/email")
+    public ResponseEntity<?> updateUserEmail(@RequestBody UserUpdateEmailDTO userUpdateEmailDTO) {
+        userService.updateUserEmail(userUpdateEmailDTO.getOldEmail(), userUpdateEmailDTO.getNewEmail());
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Usuário atualizado"));
+    }
+
+    @PatchMapping("/budget")
+    public ResponseEntity<?> updateUserBudget(@RequestBody UserUpdateBudgetDTO userUpdateBudgetDTO) {
+        userService.updateUserBudget(userUpdateBudgetDTO);
+        return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Orçamento atualizado"));
     }
 
     @GetMapping("/{email}")

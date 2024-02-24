@@ -2,6 +2,7 @@ package com.example.meucontrolefinanceiro.service;
 
 import com.example.meucontrolefinanceiro.model.User;
 import com.example.meucontrolefinanceiro.model.dtos.UserRegistrationDTO;
+import com.example.meucontrolefinanceiro.model.dtos.UserUpdateBudgetDTO;
 import com.example.meucontrolefinanceiro.repository.CategoryRepository;
 import com.example.meucontrolefinanceiro.repository.UserRepository;
 import com.example.meucontrolefinanceiro.utils.exceptions.AccountNotDeletedException;
@@ -43,6 +44,12 @@ public class UserService {
         checkForExistentAccountByEmail(newEmail);
         User userModel = findUserByEmail(oldEmail);
         userModel.setEmail(newEmail);
+        userRepository.save(userModel);
+    }
+
+    public void updateUserBudget(UserUpdateBudgetDTO userUpdateBudgetDTO) {
+        User userModel = findUserByEmail(userUpdateBudgetDTO.getEmail());
+        userModel.setBudget(userUpdateBudgetDTO.getNewBudget());
         userRepository.save(userModel);
     }
 
