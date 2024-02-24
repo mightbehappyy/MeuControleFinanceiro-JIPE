@@ -75,7 +75,7 @@ DATABASE_USERNAME
 - **[4.1 Criar transação](#post-adicionar-transação)**
 - **[4.2 Gasto mensal](#get-encontrar-gasto-mensal)**
 - **[4.3 Encontrar transações de um período](#get-encontrar-gastos-em-um-período-específico)**
-- **[4.2 4.3 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
+- **[4.4 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
 
 Esta secção é dedicada a instrução de como utilizar a API do Meu Controle Financeiro pelo lado do cliente (Alexa).
 Os endpoints serão descritos logo abaixo como também o formato de suas entradas.
