@@ -21,7 +21,6 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Email(message = "E-mail inválido")
     private String email;
 
     private float budget;
