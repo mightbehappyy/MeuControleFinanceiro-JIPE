@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CategoryUpdateBudget {
+public class CategoryUpdateBudgetDTO {
 
     private final String amazonId;
     private final String categoryName;

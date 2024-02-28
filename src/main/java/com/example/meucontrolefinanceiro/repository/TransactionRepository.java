@@ -1,5 +1,6 @@
 package com.example.meucontrolefinanceiro.repository;
 
+import com.example.meucontrolefinanceiro.model.Category;
 import com.example.meucontrolefinanceiro.model.Transaction;
 import com.example.meucontrolefinanceiro.model.User;
 import com.example.meucontrolefinanceiro.model.enums.TransactionEnum;
@@ -22,5 +23,11 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
   );
   List<Transaction> findAllByUserEmail(String email);
   List<Transaction> findAllByDateBetweenAndUserEmail(Date start, Date end, String email);
+  List<Transaction> findAllByDateBetweenAndUserEmailAndCategory(
+          Date start,
+          Date end,
+          String email,
+          Category category
+  );
 }
 

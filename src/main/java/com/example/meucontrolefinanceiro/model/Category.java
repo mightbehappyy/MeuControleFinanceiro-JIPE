@@ -18,6 +18,9 @@ public class Category {
     @Column
     private String name;
 
+    @Column
+    private int budget;
+
     @ManyToOne
     private User user;
 }
