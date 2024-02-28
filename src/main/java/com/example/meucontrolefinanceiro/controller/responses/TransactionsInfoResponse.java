@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserMonthlySpendingResponse {
+public class TransactionsInfoResponse {
     private final float outcoming;
     private final float incomes;
     private final float expenses;
     private final String userEmail;
-    private final float userBudget;
+    private final float budget;
 
 }

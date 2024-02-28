@@ -55,6 +55,19 @@ public class TransactionController {
     ));
   }
 
+  @GetMapping("/by-category")
+  public ResponseEntity<?> getCategoryMonthExpending(
+          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime currentDate,
+          @RequestParam String email,
+          @RequestParam String category
+  ) {
+    Date formattedCurrentDate = Date.from(currentDate.atZone(ZoneId.systemDefault()).toInstant());
+
+    return ResponseEntity.status(HttpStatus.OK).body((
+            transactionService.findCategoryTransactions(formattedCurrentDate, email, category)
+    ));
+  }
+
   @GetMapping("/type/{type}")
   public ResponseEntity<?> findTransactionByType(@PathVariable("type") TransactionEnum type) {
     return ResponseEntity.status(HttpStatus.OK).body(transactionService.findByType(type));
