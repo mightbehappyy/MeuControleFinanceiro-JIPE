@@ -150,7 +150,7 @@ nomes das variáveis e seus valores
 > _@PathVariable_
 >
 > ```
-> /api/user/"testeCategoria@gmail.com"
+> /api/user/"ABCDEF"
 > ```
 
 ### `GET` Encontrar um usuário por amazonId
@@ -180,7 +180,7 @@ nomes das variáveis e seus valores
 > _@PathVariable_
 >
 > ```
-> /api/category/user/testeCategoria@gmail.com
+> /api/category/user/ABCDEF
 > ```
 
 ### `POST` Criar categoria
