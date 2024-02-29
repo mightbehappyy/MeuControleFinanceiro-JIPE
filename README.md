@@ -55,41 +55,72 @@ DATABASE_USERNAME
 ```
 
 ## Como usar
-
 **[1. URL da api](#url-da-api-em-produção)**
 
-**[2. Endpoints-Usuário](#usuário)**
+**[2. Convenções](#convenções)**
 
-- **[2.1 Criar Usuário](#post-criar-usuário)**
-- **[2.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
-- **[2.3 Atualizar email do usuário](#patch-atualizar-email-do-usuário)**
-- **[2.1 Encontrar usuário por e-mail](#get-encontrar-um-usuário-por-e-mail)**
 
-**[3. Endpoints-Categorias](#categorias)**
+**[3. Endpoints-Usuário](#usuário)**
 
-- **[3.1 Encontrar categorias por e-mail](#get-encontrar-todas-as-categorias-de-um-usuário)**
-- **[3.2 Criar categoria](#post-criar-categoria)**
+- **[3.1 Criar Usuário](#post-criar-usuário)**
+- **[3.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
+- **[3.3 Atualizar email do usuário](#patch-atualizar-email-do-usuário)**
+- **[3.4 Encontrar usuário por e-mail](#get-encontrar-um-usuário-por-e-mail)**
 
-**[4. Endpoints-Transação](#transação)**
+**[4. Endpoints-Categorias](#categorias)**
 
-- **[4.1 Criar transação](#post-adicionar-transação)**
-- **[4.2 Gasto mensal](#get-encontrar-gasto-mensal)**
-- **[4.3 Encontrar transações de um período](#get-encontrar-gastos-em-um-período-específico)**
-- **[4.4 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
+- **[4.1 Encontrar categorias por e-mail](#get-encontrar-todas-as-categorias-de-um-usuário)**
+- **[4.2 Criar categoria](#post-criar-categoria)**
+- **[4.3 Atualizar orçamento de uma categoria](#patch-atualizar-orçamento-de-uma-categoria)**
+
+**[5. Endpoints-Transação](#transação)**
+
+- **[5.1 Criar transação](#post-adicionar-transação)**
+- **[5.2 Gasto mensal](#get-encontrar-gasto-mensal)**
+- **[5.3 Encontrar transações de um período](#get-encontrar-gastos-em-um-período-específico)**
+- **[5.4 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
+- **[5.5 Encontrar gastos no período de um mês de uma categoria especificada](#get-encontrar-gastos-no-período-de-um-mês-de-uma-categoria-especificada)**
+
 
 Esta secção é dedicada a instrução de como utilizar a API do Meu Controle Financeiro pelo lado do cliente (Alexa).
 Os endpoints serão descritos logo abaixo como também o formato de suas entradas.
-
-Convenções:
-
-- @RequestBody: Indica que naquele exemplo, está sendo usado um JSON no BODY da requisição
-- @PathVariable: Indica que naquele exemplo, está sendo usada uma variável no HEADER da requisição
-
-### URL da API em produção
+## URL da API em produção
 
 ```
 https://meu-controle-financeiro-161352531094.herokuapp.com
 ```
+## Convenções:
+
+>@RequestBody: Indica que naquele exemplo, está sendo usado um JSON no BODY da requisição
+>
+>
+> Exemplo: 
+>  ```
+>  {
+>    "email": "teste@gmail.com",
+>    "senha": "senha123"
+>  }
+>  ```
+ 
+> @PathVariable: Indica que naquele exemplo, está sendo usada uma variável no PATH da requisição
+>
+>
+> Exemplo:
+>  ```
+>  person/{id}
+>  ```
+
+> @RequestParams: Indica que naquele exemplo, está sendo usada uma variável nos parametros de QUERY 
+>
+>
+> Exemplo:
+> ```
+> /person?name="Pedro"
+> ```
+> OBS: No Postman/Insomnia para fazer uma requisição com query params você utilizará o Multipart Form e o 
+> preencherá com os
+nomes das variáveis e seus valores
+
 
 ## Usuário
 
@@ -187,6 +218,25 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > }
 > ```
 
+### `PATCH` Atualizar orçamento de uma categoria
+
+> ```
+> /api/category
+> ```
+>
+> Exemplo de utilização
+>
+> _@RequestBody_
+>
+> ```
+> {
+> "amazonId": "ABCDE",
+> "categoryName": "categoria",
+> "newCategoryBudget": 100
+> }
+> ```
+ 
+
 ## Transação
 
 ### `POST` Adicionar transação
@@ -218,13 +268,11 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
-> "currentDate": "2023-02-02T10:36:40-03:00",
-> "userEmail": "testeCategoria@gmail.com"
-> }
+> currentDate: 2023-02-02T10:36:40-03:00,
+> userEmail: "testeCategoria@gmail.com"
 > ```
 
 ### `GET` Encontrar gastos em um período específico
@@ -235,14 +283,12 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
->    "dateStart": "2018-09-28T10:36:40-03:00",
->    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "email": "email@email.com"
-> }
+> dateStart: 2018-09-28T10:36:40-03:00,
+> dateEnd: 2020-11-29T10:36:40-03:00,
+> email: email@email.com
 > ```
 
 ### `GET` Encontrar gastos em um período específico e por tipo de gasto específico
@@ -250,19 +296,34 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > ```
 > /api/transaction/daterange/INCOME
 > ```
->
+> @PathVariable
+> 
 > Caso seja de gastos, ao invés de INCOME, será EXPENSE
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
->    "dateStart": "2018-09-28T10:36:40-03:00",
->    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "email": "email@email.com"
-> }
+> dateStart: 2018-09-28T10:36:40-03:00,
+> dateEnd: 2020-11-29T10:36:40-03:00,
+> email: email@email.com
+> ```
+
+### `GET` Encontrar gastos no período de um mês de uma categoria especificada
+
+> ```
+> /api/transaction/by-category
+> ```
+>
+> Exemplo de utilização
+>
+> _@RequestParam_
+>
+> ``` 
+> currentDate: 2018-09-28T10:36:40-03:00,
+> amazonId: ABCDEF
+> category: categoria
 > ```
 
 ## Requisitos
@@ -321,10 +382,10 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 
 - [x] RF 001
 - [x] RF 002
-- [ ] RF 003
+- [x] RF 003
 - [x] RF 004
-- [ ] RF 005
-- [ ] RF 006
+- [x] RF 005
+- [x] RF 006
 - [x] RF 007
 
 ## Autores
