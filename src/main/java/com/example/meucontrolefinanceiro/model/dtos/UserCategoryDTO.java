@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserCategoryDTO {
   private String name;
-  private String email;
+  private String amazonId;
 }

@@ -22,7 +22,7 @@
 
 ## Sobre o Projeto
 
-Meu Controle Financeiro é uma [skill](https://www.amazon.com.br/gp/help/customer/display.html?nodeId=GG3RZLAA3RH83JAA) da Alexa que possibilita o gerenciamento de finanças por meio de simples comandos de voz. De maneira rápida e conveniente o usuário pode definir um orçamento para o mês e adicionar gastos realizados no dia-a-dia podendo classifica-los dentro destas categorias que o próprio usuário criará. Uma vez definido seu orçamento é possível resgatar o quanto resta para o limite do orçamento e também pode ser alertado quando ultrapassar o limite estabelecido. A skill facilita o processo de gereciamento de finanças visto que todas estas informações estão tão próximas quanto um comando de voz tudo graças a tecnologia da Alexa. O repositório em questão se trata do back-end do projeto, este faz a comunicação com o banco de dado, resgata e registra informações de requisições vindas da Alexa.
+Meu Controle Financeiro é uma [skill](https://www.amazon.com.br/gp/help/customer/display.html?nodeId=GG3RZLAA3RH83JAA) da Alexa que possibilita o gerenciamento de finanças por meio de simples comandos de voz. De maneira rápida e conveniente, o usuário pode definir um orçamento para o mês e adicionar gastos realizados no dia-a-dia, podendo classificá-los dentro destas categorias que o próprio usuário criará. Uma vez definido seu orçamento, é possível resgatar o quanto resta para o limite do orçamento e também pode ser alertado quando ultrapassar o limite estabelecido. A skill facilita o processo de gerenciamento de finanças, visto que estas informações estão tão próximas quanto um comando de voz, tudo graças à tecnologia da Alexa. O repositório em questão se trata do back-end do projeto, este faz a comunicação com o banco de dados, resgata e registra informações de requisições vindas da Alexa.
 
 ## Tecnologias Utilizadas
 
@@ -55,41 +55,71 @@ DATABASE_USERNAME
 ```
 
 ## Como usar
-
 **[1. URL da api](#url-da-api-em-produção)**
 
-**[2. Endpoints-Usuário](#usuário)**
+**[2. Convenções](#convenções)**
 
-- **[2.1 Criar Usuário](#post-criar-usuário)**
-- **[2.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
-- **[2.3 Atualizar email do usuário](#patch-atualizar-email-do-usuário)**
-- **[2.1 Encontrar usuário por e-mail](#get-encontrar-um-usuário-por-e-mail)**
 
-**[3. Endpoints-Categorias](#categorias)**
+**[3. Endpoints-Usuário](#usuário)**
 
-- **[3.1 Encontrar categorias por e-mail](#get-encontrar-todas-as-categorias-de-um-usuário)**
-- **[3.2 Criar categoria](#post-criar-categoria)**
+- **[3.1 Criar Usuário](#post-criar-usuário)**
+- **[3.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
+- **[3.3 Encontrar usuário por amazonId](#get-encontrar-um-usuário-por-amazonid)**
 
-**[4. Endpoints-Transação](#transação)**
+**[4. Endpoints-Categorias](#categorias)**
 
-- **[4.1 Criar transação](#post-adicionar-transação)**
-- **[4.2 Gasto mensal](#get-encontrar-gasto-mensal)**
-- **[4.3 Encontrar transações de um período](#get-encontrar-gastos-em-um-período-específico)**
-- **[4.4 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
+- **[4.1 Encontrar categorias por amazonId](#get-encontrar-todas-as-categorias-de-um-usuário)**
+- **[4.2 Criar categoria](#post-criar-categoria)**
+- **[4.3 Atualizar orçamento de uma categoria](#patch-atualizar-orçamento-de-uma-categoria)**
+
+**[5. Endpoints-Transação](#transação)**
+
+- **[5.1 Criar transação](#post-adicionar-transação)**
+- **[5.2 Gasto mensal](#get-encontrar-gasto-mensal)**
+- **[5.3 Encontrar transações de um período](#get-encontrar-gastos-em-um-período-específico)**
+- **[5.4 Encontrar transações de um período e por um tipo](#get-encontrar-gastos-em-um-período-específico-e-por-tipo-de-gasto-específico)**
+- **[5.5 Encontrar gastos no período de um mês de uma categoria especificada](#get-encontrar-gastos-no-período-de-um-mês-de-uma-categoria-especificada)**
+
 
 Esta secção é dedicada a instrução de como utilizar a API do Meu Controle Financeiro pelo lado do cliente (Alexa).
 Os endpoints serão descritos logo abaixo como também o formato de suas entradas.
-
-Convenções:
-
-- @RequestBody: Indica que naquele exemplo, está sendo usado um JSON no BODY da requisição
-- @PathVariable: Indica que naquele exemplo, está sendo usada uma variável no HEADER da requisição
-
-### URL da API em produção
+## URL da API em produção
 
 ```
 https://meu-controle-financeiro-161352531094.herokuapp.com
 ```
+## Convenções:
+
+>@RequestBody: Indica que naquele exemplo, está sendo usado um JSON no BODY da requisição
+>
+>
+> Exemplo: 
+>  ```
+>  {
+>    "amazonId": "ABCDEF",
+>    "senha": "senha123"
+>  }
+>  ```
+ 
+> @PathVariable: Indica que naquele exemplo, está sendo usada uma variável no PATH da requisição
+>
+>
+> Exemplo:
+>  ```
+>  person/{id}
+>  ```
+
+> @RequestParams: Indica que naquele exemplo, está sendo usada uma variável nos parametros de QUERY 
+>
+>
+> Exemplo:
+> ```
+> /person?name="Pedro"
+> ```
+> OBS: No Postman/Insomnia para fazer uma requisição com query params você utilizará o Multipart Form e o 
+> preencherá com os
+nomes das variáveis e seus valores
+
 
 ## Usuário
 
@@ -105,14 +135,14 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 >
 > ```
 > {
->  "email": "testeCategoria@gmail.com"
+>  "amazonId": "ABCDEF"
 > }
 > ```
 
 ### `DELETE` Endpoint Deletar usuário
 
 > ```
-> /api/user/{email}
+> /api/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -120,30 +150,13 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > _@PathVariable_
 >
 > ```
-> /api/user/"testeCategoria@gmail.com"
+> /api/user/"ABCDEF"
 > ```
 
-### `PATCH` Atualizar email do usuário
+### `GET` Encontrar um usuário por amazonId
 
 > ```
-> /api/user/
-> ```
->
-> Exemplo de utilização
->
-> _@RequestBody_
->
-> ```
-> {
-> "oldEmail" : "testeCategoria@gmail.com",
-> "newEmail" : "food3@gmail.com.br"
-> }
-> ```
-
-### `GET` Encontrar um usuário por e-mail
-
-> ```
-> /api/user/{email}
+> /api/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -151,7 +164,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > _@PathVariable_
 >
 > ```
-> /api/user/testeCategoria@gmail.com
+> /api/user/ABCDEF
 > ```
 
 ## Categorias
@@ -159,7 +172,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 ### `GET` Encontrar todas as categorias de um usuário
 
 > ```
-> /api/category/user/{email}
+> /api/category/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -167,7 +180,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > _@PathVariable_
 >
 > ```
-> /api/category/user/testeCategoria@gmail.com
+> /api/category/user/ABCDEF
 > ```
 
 ### `POST` Criar categoria
@@ -183,9 +196,28 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > ```
 > {
 > 	"name": "categoria3",
-> 	"email": "testeCategoria@gmail.com"
+> 	"amazonId": "ABCDEF"
 > }
 > ```
+
+### `PATCH` Atualizar orçamento de uma categoria
+
+> ```
+> /api/category
+> ```
+>
+> Exemplo de utilização
+>
+> _@RequestBody_
+>
+> ```
+> {
+> "amazonId": "ABCDE",
+> "categoryName": "categoria",
+> "newCategoryBudget": 100
+> }
+> ```
+ 
 
 ## Transação
 
@@ -206,7 +238,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > "date": "2023-02-05T10:36:40-03:00",
 > "type": "EXPENSE",
 > "category": "categoria",
-> "email": "testeCategoria@gmail.com"
+> "amazonId": "ABCDEF"
 > }
 > ```
 
@@ -218,13 +250,11 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
-> "currentDate": "2023-02-02T10:36:40-03:00",
-> "userEmail": "testeCategoria@gmail.com"
-> }
+> currentDate: 2023-02-02T10:36:40-03:00,
+> amazonId: "ABCDEF"
 > ```
 
 ### `GET` Encontrar gastos em um período específico
@@ -235,14 +265,12 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
->    "dateStart": "2018-09-28T10:36:40-03:00",
->    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "email": "email@email.com"
-> }
+> dateStart: 2018-09-28T10:36:40-03:00,
+> dateEnd: 2020-11-29T10:36:40-03:00,
+> amazonId: ABCDEF
 > ```
 
 ### `GET` Encontrar gastos em um período específico e por tipo de gasto específico
@@ -250,19 +278,34 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > ```
 > /api/transaction/daterange/INCOME
 > ```
->
+> @PathVariable
+> 
 > Caso seja de gastos, ao invés de INCOME, será EXPENSE
 >
 > Exemplo de utilização
 >
-> _@RequestBody_
+> _@RequestParam_
 >
 > ```
-> {
->    "dateStart": "2018-09-28T10:36:40-03:00",
->    "dateEnd": "2020-11-29T10:36:40-03:00",
->    "email": "email@email.com"
-> }
+> dateStart: 2018-09-28T10:36:40-03:00,
+> dateEnd: 2020-11-29T10:36:40-03:00,
+> amazonId: ABCDEF
+> ```
+
+### `GET` Encontrar gastos no período de um mês de uma categoria especificada
+
+> ```
+> /api/transaction/by-category
+> ```
+>
+> Exemplo de utilização
+>
+> _@RequestParam_
+>
+> ``` 
+> currentDate: 2018-09-28T10:36:40-03:00,
+> amazonId: ABCDEF
+> category: categoria
 > ```
 
 ## Requisitos
@@ -272,15 +315,15 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 - Descrição: Usuário pode adicionar um gasto ou um embolso, informando com o
   que foi gasto e em que categoria esse se encontra
 - Prioridade: Alta
-- Entrada: Email do usuário, tipo de transação (INCOME, EXPENSE), categoria, título, data e custo.
+- Entrada: amazonId do usuário, tipo de transação (INCOME, EXPENSE), categoria, título, data e custo.
 - Saída: Confirmação do sucesso da adição da transação.
 
 **RF 002 - Verificar gasto mensal**
 
 - Descrição: - Usuário pode solicitar o quanto já foi gasto no mês levando em consideração o dinheiro que entrou e saiu
 - Prioridade: Alta
-- Entrada: Email do usuário e data atual
-- Saída: Retorna o email do usuário e o total gasto no mês
+- Entrada: amazonId do usuário e data atual
+- Saída: Retorna o amazonId do usuário e o total gasto no mês
 
 **RF 003 - Definir orçamento**
 
@@ -293,38 +336,38 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 
 - Descrição: Usuário pode criar uma categoria para adicionar transações a essa categoria
 - Prioridade: Média
-- Entrada: Email do usuário e nome da categoria
+- Entrada: AmazonId do usuário e nome da categoria
 - Saída: Não possue saída
 
 **RF 005 - Definir orçamento para categoria**
 
 - Descrição: Usuário pode definir um orçamento para uma categoria especifica
 - Prioridade: Média
-- Entrada: Email do usuário, nome da categoria e orçamento
+- Entrada: AmazonId do usuário, nome da categoria e orçamento
 - Saída: Não possue saída
 
 **RF 006 - Recuperar saldo de uma categoria**
 
 - Descrição: Usuário pode resgatar os gastos realizados em uma determinada categoria
 - Prioridade: Média
-- Entrada: Email do usuário e nome da categoria
+- Entrada: AmazonId do usuário e nome da categoria
 - Saída: Retorna o saldo da categoria solicitada
 
 **RF 007 - Cadastrar usuário**
 
-- Descrição: Usuário pode cadastrar seu email que está associado ao dispositivo Alexa
+- Descrição: Usuário pode cadastrar seu amazonId que está associado ao dispositivo Alexa
 - Prioridade: Baixa
-- Entrada: Email do usuário
+- Entrada: AmazonId do usuário
 - Saída: Não possue saída
 
 ## To-do
 
 - [x] RF 001
 - [x] RF 002
-- [ ] RF 003
+- [x] RF 003
 - [x] RF 004
-- [ ] RF 005
-- [ ] RF 006
+- [x] RF 005
+- [x] RF 006
 - [x] RF 007
 
 ## Autores

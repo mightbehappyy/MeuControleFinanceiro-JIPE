@@ -22,15 +22,15 @@ public class UserService {
     private final CategoryRepository categoryRepository;
 
     public User createUser(UserRegistrationDTO userRegistrationDTO) {
-        checkForExistentAccountByEmail(userRegistrationDTO.getEmail());
+        checkForExistentAccountByAmazonId(userRegistrationDTO.getAmazonId());
         User userModel = new User();
         BeanUtils.copyProperties(userRegistrationDTO, userModel);
         return userRepository.save(userModel);
     }
 
-    public User findUserByEmail(String email) {
+    public User findUserByAmazonId(String amazonId) {
         return userRepository
-                .findByEmail(email)
+                .findByAmazonId(amazonId)
                 .orElseThrow(() -> new AccountNotFound("Conta não encontrada"));
     }
 
@@ -40,29 +40,31 @@ public class UserService {
                 .orElseThrow(() -> new AccountNotFound("Conta não encontrada"));
     }
 
-    public void updateUserEmail(String oldEmail, String newEmail) {
-        checkForExistentAccountByEmail(newEmail);
-        User userModel = findUserByEmail(oldEmail);
-        userModel.setEmail(newEmail);
+    public void updateUserAmazonId(String oldAmazonId, String newAmazonId) {
+        checkForExistentAccountByAmazonId(newAmazonId);
+        User userModel = findUserByAmazonId(oldAmazonId);
+        userModel.setAmazonId(newAmazonId);
         userRepository.save(userModel);
     }
 
     public void updateUserBudget(UserUpdateBudgetDTO userUpdateBudgetDTO) {
-        User userModel = findUserByEmail(userUpdateBudgetDTO.getEmail());
+        User userModel = findUserByAmazonId(userUpdateBudgetDTO.getAmazonId());
         userModel.setBudget(userUpdateBudgetDTO.getNewBudget());
         userRepository.save(userModel);
     }
 
-    public void deleteUserByEmail(String email) {
-        User userModel = findUserByEmail(email);
-        categoryRepository.deleteAllByUserEmail(email);
+    public void deleteUserByAmazonId(String amazonId) {
+        User userModel = findUserByAmazonId(amazonId);
+        categoryRepository.deleteAllByUserAmazonId(amazonId);
         userRepository
-                .deleteUserByEmail(userModel.getEmail())
-                .orElseThrow(() -> new AccountNotDeletedException("Não possível deletar essa conta"));
+                .deleteUserByAmazonId(userModel.getAmazonId())
+                .orElseThrow(() -> new AccountNotDeletedException(
+                    "Não possível deletar essa conta"
+                ));
     }
 
-    private void checkForExistentAccountByEmail(String email) {
-        if (userRepository.findByEmail(email).isPresent()) {
+    private void checkForExistentAccountByAmazonId(String amazonId) {
+        if (userRepository.findByAmazonId(amazonId).isPresent()) {
             throw new ExistentAccountException("Conta existente");
         }
     }

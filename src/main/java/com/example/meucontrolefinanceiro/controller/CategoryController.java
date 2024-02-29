@@ -21,13 +21,18 @@ public class CategoryController {
   }
 
   @GetMapping("/{name}/{user_id}")
-  public ResponseEntity<?> findCategoryByNameAndUserId(@PathVariable("user_id") Long user_id, @PathVariable("name") String name) {
-    return ResponseEntity.status(HttpStatus.OK).body(categoryService.findCategoryByNameAndUserId(name, user_id));
+  public ResponseEntity<?> findCategoryByNameAndUserId(
+      @PathVariable("user_id") Long user_id,
+      @PathVariable("name") String name
+  ) {
+    return ResponseEntity.status(HttpStatus.OK).body(
+        categoryService.findCategoryByNameAndUserId(name, user_id)
+    );
   }
 
-  @GetMapping("user/{email}")
-  public ResponseEntity<?> findAllCategoriesByName(@PathVariable("email") String email) {
-    return ResponseEntity.ok(categoryService.findAllCategoriesByEmail(email));
+  @GetMapping("user/{amazonId}")
+  public ResponseEntity<?> findAllCategoriesByName(@PathVariable("amazonId") String amazonId) {
+    return ResponseEntity.ok(categoryService.findAllCategoriesByAmazonId(amazonId));
   }
 
   @GetMapping("/{id}")
@@ -36,8 +41,12 @@ public class CategoryController {
   }
 
   @PatchMapping
-  public ResponseEntity<?> updateCategoryBudget(@RequestBody CategoryUpdateBudgetDTO categoryUpdateBudgetDTO) {
-    return ResponseEntity.status(HttpStatus.OK).body(categoryService.updateCategoryBudget(categoryUpdateBudgetDTO));
+  public ResponseEntity<?> updateCategoryBudget(
+      @RequestBody CategoryUpdateBudgetDTO categoryUpdateBudgetDTO
+  ) {
+    return ResponseEntity.status(HttpStatus.OK).body(
+        categoryService.updateCategoryBudget(categoryUpdateBudgetDTO)
+    );
   }
 
 }
