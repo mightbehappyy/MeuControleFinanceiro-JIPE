@@ -1,5 +1,6 @@
 package com.example.meucontrolefinanceiro.service;
 
+import com.example.meucontrolefinanceiro.controller.responses.TransactionCreationResponse;
 import com.example.meucontrolefinanceiro.controller.responses.TransactionsInfoResponse;
 import com.example.meucontrolefinanceiro.model.Category;
 import com.example.meucontrolefinanceiro.model.Transaction;
@@ -27,7 +28,7 @@ public class TransactionService {
   private final CategoryService categoryService;
   private final CategoryRepository categoryRepository;
 
-  public Transaction createTransaction(UserTransactionDTO userTransactionDTO) {
+  public TransactionCreationResponse createTransaction(UserTransactionDTO userTransactionDTO) {
     User user = userService.findUserByAmazonId(userTransactionDTO.getAmazonId());
     List<Category> categories = categoryService
         .findAllCategoriesByNameAndUserId(userTransactionDTO.getCategory(), user.getId());
@@ -47,8 +48,15 @@ public class TransactionService {
     BeanUtils.copyProperties(userTransactionDTO, transactionModel);
     transactionModel.setUser(user);
     transactionModel.setCategory(category);
+    Transaction transaction = transactionRepository.save(transactionModel);
 
-    return transactionRepository.save(transactionModel);
+    return new TransactionCreationResponse(
+            transaction,
+            category,
+            findMonthTransactions(transaction.getDate(), user.getAmazonId()),
+            findCategoryTransactions(transaction.getDate(), user.getAmazonId(), category.getName()),
+            user
+            );
   }
 
     public List<Transaction> findByUserId(Long user_id) {
