@@ -66,6 +66,7 @@ public class CategoryService {
 
     Category category = findCategoryByNameAndUserId(categoryName, userId);
     category.setBudget(newBudget);
+    categoryRepository.save(category);
     return category;
   }
 

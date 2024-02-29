@@ -38,6 +38,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ApiResponse(HttpStatus.NOT_FOUND, ex.getMessage()));
     }
 
+    @ExceptionHandler(ExistentCategoryException.class)
+    public ResponseEntity<Object> handleCategoryNotFound(ExistentCategoryException ex) {
+        return buildResponseEntity(new ApiResponse(HttpStatus.CONFLICT, ex.getMessage()));
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiResponse apiResponse) {
         return new ResponseEntity<>(apiResponse, apiResponse.getStatus());
     }
