@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class TransactionFilterDateDTO {
   private Date dateStart;
   private Date dateEnd;
-  private String email;
+  private String amazonId;
 }

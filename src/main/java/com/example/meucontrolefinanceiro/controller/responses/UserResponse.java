@@ -11,11 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserResponse {
     private final long id;
-    private final String email;
+    private final String amazonId;
     private final float budget;
     public UserResponse(User user) {
         this.id = user.getId();
-        this.email = user.getEmail();
+        this.amazonId = user.getAmazonId();
         this.budget = user.getBudget();
     }
 }

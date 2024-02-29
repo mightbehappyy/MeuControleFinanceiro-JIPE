@@ -15,5 +15,5 @@ public class UserTransactionDTO {
   private Date date;
   private TransactionEnum type;
   private String category;
-  private String email;
+  private String amazonId;
 }

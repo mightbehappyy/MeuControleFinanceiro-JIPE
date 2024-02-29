@@ -28,7 +28,7 @@ public class TransactionService {
   private final CategoryRepository categoryRepository;
 
   public Transaction createTransaction(UserTransactionDTO userTransactionDTO) {
-    User user = userService.findUserByEmail(userTransactionDTO.getEmail());
+    User user = userService.findUserByAmazonId(userTransactionDTO.getAmazonId());
     List<Category> categories = categoryService
         .findAllCategoriesByNameAndUserId(userTransactionDTO.getCategory(), user.getId());
     Category category;
@@ -57,9 +57,9 @@ public class TransactionService {
         return transactionRepository.findByUserId(user_id);
     }
 
-    public List<Transaction> findByUserEmail(String userEmail) {
-        userService.findUserByEmail(userEmail);
-        return transactionRepository.findAllByUserEmail(userEmail);
+    public List<Transaction> findByUserAmazonId(String amazonId) {
+        userService.findUserByAmazonId(amazonId);
+        return transactionRepository.findAllByUserAmazonId(amazonId);
     }
 
     public List<Transaction> findByType(TransactionEnum type) {
@@ -67,12 +67,13 @@ public class TransactionService {
         return transactionRepository.findByType(type);
     }
 
-    public TransactionsInfoResponse findMonthTransactions(Date currentDate, String email) {
+    public TransactionsInfoResponse findMonthTransactions(Date currentDate, String amazonId) {
 
-        List<Transaction> transactionList = transactionRepository.findAllByDateBetweenAndUserEmail(
+        List<Transaction> transactionList = transactionRepository
+            .findAllByDateBetweenAndUserAmazonId(
                         getDateMonthRange(currentDate).get("firstDay"),
                         getDateMonthRange(currentDate).get("lastDay"),
-                        email);
+                        amazonId);
 
         Map<String, Float> transactionInfo = getFilteredTransactionsInfo(transactionList);
 
@@ -80,16 +81,22 @@ public class TransactionService {
             transactionInfo.get("total"),
             transactionInfo.get("income"),
             transactionInfo.get("expense"),
-            email,
-            userService.findUserByEmail(email).getBudget()
+            amazonId,
+            userService.findUserByAmazonId(amazonId).getBudget()
         );
     }
 
-    public TransactionsInfoResponse findCategoryTransactions(Date currentDate, String userAmazonId, String category) {
-        Category userCategory = categoryService.findCategoryByNameAndAmazonId(category, userAmazonId);
+    public TransactionsInfoResponse findCategoryTransactions(
+        Date currentDate,
+        String userAmazonId,
+        String category
+    ) {
+        Category userCategory = categoryService
+            .findCategoryByNameAndAmazonId(category, userAmazonId);
         Map<String, Date> monthRange = getDateMonthRange(currentDate);
 
-        List<Transaction> transactionList = transactionRepository.findAllByDateBetweenAndUserEmailAndCategory(
+        List<Transaction> transactionList = transactionRepository
+            .findAllByDateBetweenAndUserAmazonIdAndCategory(
                 monthRange.get("firstDay"),
                 monthRange.get("lastDay"),
                 userAmazonId,
@@ -106,8 +113,8 @@ public class TransactionService {
           userCategory.getBudget()
         );
     }
-    public List<Transaction> findByDateRange(Date dateStart, Date dateEnd, String email) {
-        User user = userService.findUserByEmail(email);
+    public List<Transaction> findByDateRange(Date dateStart, Date dateEnd, String amazonId) {
+        User user = userService.findUserByAmazonId(amazonId);
 
         return transactionRepository.findAllByDateBetweenAndUserId(
                 dateStart,
@@ -119,10 +126,10 @@ public class TransactionService {
     public List<Transaction> findByDateRangeAndType(
             Date dateStart,
             Date dateEnd,
-            String email,
+            String amazonId,
             TransactionEnum type
     ) {
-        User user = userService.findUserByEmail(email);
+        User user = userService.findUserByAmazonId(amazonId);
 
         return transactionRepository.findAllByDateBetweenAndUserIdAndType(
                 dateStart,

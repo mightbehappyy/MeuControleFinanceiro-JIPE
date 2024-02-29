@@ -34,37 +34,37 @@ public class TransactionController {
     return ResponseEntity.status(HttpStatus.OK).body(transactionService.findByUserId(user_id));
   }
 
-  @GetMapping("/user/{userEmail}")
-  public ResponseEntity<?> findTransactionByUserEmail(
-      @PathVariable("userEmail") String userEmail
+  @GetMapping("/user/{userAmazonId}")
+  public ResponseEntity<?> findTransactionByUserAmazonId(
+      @PathVariable("userAmazonId") String userAmazonId
   ) {
     return ResponseEntity.status(HttpStatus.OK).body(
-        transactionService.findByUserEmail(userEmail)
+        transactionService.findByUserAmazonId(userAmazonId)
     );
   }
 
   @GetMapping
   public ResponseEntity<?> getMonthExpending(
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime currentDate,
-      @RequestParam String email
+      @RequestParam String amazonId
   ) {
     Date formattedCurrentDate = Date.from(currentDate.atZone(ZoneId.systemDefault()).toInstant());
 
     return ResponseEntity.status(HttpStatus.OK).body((
-        transactionService.findMonthTransactions(formattedCurrentDate, email)
+        transactionService.findMonthTransactions(formattedCurrentDate, amazonId)
     ));
   }
 
   @GetMapping("/by-category")
   public ResponseEntity<?> getCategoryMonthExpending(
           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime currentDate,
-          @RequestParam String email,
+          @RequestParam String amazonId,
           @RequestParam String category
   ) {
     Date formattedCurrentDate = Date.from(currentDate.atZone(ZoneId.systemDefault()).toInstant());
 
     return ResponseEntity.status(HttpStatus.OK).body((
-            transactionService.findCategoryTransactions(formattedCurrentDate, email, category)
+            transactionService.findCategoryTransactions(formattedCurrentDate, amazonId, category)
     ));
   }
 
@@ -77,7 +77,7 @@ public class TransactionController {
   public ResponseEntity<?> findTransactionByDateRange(
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateStart,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateEnd,
-      @RequestParam String email
+      @RequestParam String amazonId
   ) {
 
     Date formattedDateStart = Date.from(dateStart.atZone(ZoneId.systemDefault()).toInstant());
@@ -85,14 +85,14 @@ public class TransactionController {
 
     return ResponseEntity
         .status(HttpStatus.OK)
-        .body(transactionService.findByDateRange(formattedDateStart, formattedDateEnd, email));
+        .body(transactionService.findByDateRange(formattedDateStart, formattedDateEnd, amazonId));
   }
 
   @GetMapping("/daterange/{type}")
   public ResponseEntity<?> findTransactionByDateRangeAndType(
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateStart,
       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateEnd,
-      @RequestParam String email,
+      @RequestParam String amazonId,
       @PathVariable("type") TransactionEnum type
   ) {
     Date formattedDateStart = Date.from(dateStart.atZone(ZoneId.systemDefault()).toInstant());
@@ -103,7 +103,7 @@ public class TransactionController {
         .body(transactionService.findByDateRangeAndType(
             formattedDateStart,
             formattedDateEnd,
-            email,
+            amazonId,
             type
         ));
   }
