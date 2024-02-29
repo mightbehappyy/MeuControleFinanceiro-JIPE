@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserCategoryDTO {
   private String name;
   private String amazonId;
+  private int budget;
 }

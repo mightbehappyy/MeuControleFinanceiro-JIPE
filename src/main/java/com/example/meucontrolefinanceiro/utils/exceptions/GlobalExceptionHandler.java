@@ -39,9 +39,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ExistentCategoryException.class)
-    public ResponseEntity<Object> handleCategoryNotFound(ExistentCategoryException ex) {
+    public ResponseEntity<Object> handleExistentCategory(ExistentCategoryException ex) {
         return buildResponseEntity(new ApiResponse(HttpStatus.CONFLICT, ex.getMessage()));
     }
+
+    @ExceptionHandler(CategoryBudgetBiggerThanBudget.class)
+    public ResponseEntity<Object> handleCategoryBudgetBiggerThanBudget(CategoryBudgetBiggerThanBudget ex) {
+        return buildResponseEntity(new ApiResponse(HttpStatus.CONFLICT, ex.getMessage()));
+    }
+
 
     private ResponseEntity<Object> buildResponseEntity(ApiResponse apiResponse) {
         return new ResponseEntity<>(apiResponse, apiResponse.getStatus());

@@ -5,11 +5,11 @@ import com.example.meucontrolefinanceiro.model.User;
 import com.example.meucontrolefinanceiro.model.dtos.CategoryUpdateBudgetDTO;
 import com.example.meucontrolefinanceiro.model.dtos.UserCategoryDTO;
 import com.example.meucontrolefinanceiro.repository.CategoryRepository;
+import com.example.meucontrolefinanceiro.utils.exceptions.CategoryBudgetBiggerThanBudget;
 import com.example.meucontrolefinanceiro.utils.exceptions.CategoryNotFoundException;
 
 import java.util.List;
 
-import com.example.meucontrolefinanceiro.utils.exceptions.ExistentAccountException;
 import com.example.meucontrolefinanceiro.utils.exceptions.ExistentCategoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +22,9 @@ public class CategoryService {
   private final UserService userService;
 
   public Category createCategory(UserCategoryDTO userCategoryDTO) {
+    if (userCategoryDTO.getBudget() > userService.findUserByAmazonId(userCategoryDTO.getAmazonId()).getBudget()) {
+      throw new CategoryBudgetBiggerThanBudget("O orçamento da categoria não pode ser maior que a do usuário");
+    }
     User user = userService.findUserByAmazonId(userCategoryDTO.getAmazonId());
 
     Category category  = categoryRepository.findByNameAndUserAmazonId(
@@ -31,11 +34,10 @@ public class CategoryService {
     if (category != null) {
       throw new ExistentCategoryException("Já existe uma categoria com esse nome");
     }
-
     Category categoryModel = new Category();
     BeanUtils.copyProperties(userCategoryDTO, categoryModel);
     categoryModel.setUser(user);
-    categoryModel.setBudget(0);
+    categoryModel.setBudget(userCategoryDTO.getBudget());
     return categoryRepository.save(categoryModel);
   }
 
