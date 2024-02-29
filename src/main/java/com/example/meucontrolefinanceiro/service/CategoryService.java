@@ -19,7 +19,7 @@ public class CategoryService {
   private final UserService userService;
 
   public Category createCategory(UserCategoryDTO userCategoryDTO) {
-    User user = userService.findUserByEmail(userCategoryDTO.getEmail());
+    User user = userService.findUserByAmazonId(userCategoryDTO.getAmazonId());
 
     Category categoryModel = new Category();
     BeanUtils.copyProperties(userCategoryDTO, categoryModel);
@@ -39,19 +39,19 @@ public class CategoryService {
   }
 
   public Category findCategoryByNameAndAmazonId(String name, String amazonId) {
-    return categoryRepository.findByNameAndUserEmail(name, amazonId);
+    return categoryRepository.findByNameAndUserAmazonId(name, amazonId);
   }
 
-  public List<Category> findAllCategoriesByEmail(String email) {
-    userService.findUserByEmail(email);
-    return categoryRepository.findAllByUserEmail(email);
+  public List<Category> findAllCategoriesByAmazonId(String amazonId) {
+    userService.findUserByAmazonId(amazonId);
+    return categoryRepository.findAllByUserAmazonId(amazonId);
   }
 
   public Category updateCategoryBudget(CategoryUpdateBudgetDTO categoryUpdateBudgetDTO) {
     String amazonId = categoryUpdateBudgetDTO.getAmazonId();
     String categoryName = categoryUpdateBudgetDTO.getCategoryName();
     int newBudget = categoryUpdateBudgetDTO.getNewCategoryBudget();
-    long userId = userService.findUserByEmail(amazonId).getId();
+    long userId = userService.findUserByAmazonId(amazonId).getId();
 
     Category category = findCategoryByNameAndUserId(categoryName, userId);
     category.setBudget(newBudget);

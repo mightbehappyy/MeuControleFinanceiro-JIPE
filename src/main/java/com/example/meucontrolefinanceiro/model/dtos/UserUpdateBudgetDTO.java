@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class UserUpdateBudgetDTO {
 
-    private final String email;
+    private final String amazonId;
     private final float newBudget;
 
-    public UserUpdateBudgetDTO (String email, float budget) {
+    public UserUpdateBudgetDTO (String amazonId, float budget) {
         this.newBudget = budget;
-        this.email = email;
+        this.amazonId = amazonId;
     }
 }

@@ -21,9 +21,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
       Long user_id,
       TransactionEnum type
   );
-  List<Transaction> findAllByUserEmail(String email);
-  List<Transaction> findAllByDateBetweenAndUserEmail(Date start, Date end, String email);
-  List<Transaction> findAllByDateBetweenAndUserEmailAndCategory(
+  List<Transaction> findAllByUserAmazonId(String email);
+  List<Transaction> findAllByDateBetweenAndUserAmazonId(Date start, Date end, String email);
+  List<Transaction> findAllByDateBetweenAndUserAmazonIdAndCategory(
           Date start,
           Date end,
           String email,

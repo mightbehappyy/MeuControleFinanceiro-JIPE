@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByEmail(String email);
-  Optional<User> deleteUserByEmail(String email);
+  Optional<User> findByAmazonId(String email);
+  Optional<User> deleteUserByAmazonId(String email);
 
 }

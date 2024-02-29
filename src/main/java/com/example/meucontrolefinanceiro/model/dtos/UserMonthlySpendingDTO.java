@@ -12,5 +12,5 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserMonthlySpendingDTO {
     private Date currentDate;
-    private String userEmail;
+    private String amazonId;
 }

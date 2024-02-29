@@ -6,11 +6,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRegistrationDTO {
-    private String email;
+    private String amazonId;
     private float budget;
 
-    public UserRegistrationDTO(String email) {
-        this.email = email;
+    public UserRegistrationDTO(String amazonId) {
+        this.amazonId = amazonId;
         this.budget = 0;
         //this.expenses = new ArrayList<>();
     }

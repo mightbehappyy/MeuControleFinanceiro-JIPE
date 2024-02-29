@@ -4,7 +4,6 @@ import com.example.meucontrolefinanceiro.controller.responses.ApiResponse;
 import com.example.meucontrolefinanceiro.controller.responses.UserResponse;
 import com.example.meucontrolefinanceiro.model.dtos.UserRegistrationDTO;
 import com.example.meucontrolefinanceiro.model.dtos.UserUpdateBudgetDTO;
-import com.example.meucontrolefinanceiro.model.dtos.UserUpdateEmailDTO;
 import com.example.meucontrolefinanceiro.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,27 +22,34 @@ public class UserController {
                 .body(new UserResponse(userService.createUser(userRegistrationDTO)));
     }
 
-    @PatchMapping("/email")
-    public ResponseEntity<?> updateUserEmail(@RequestBody UserUpdateEmailDTO userUpdateEmailDTO) {
-        userService.updateUserEmail(userUpdateEmailDTO.getOldEmail(), userUpdateEmailDTO.getNewEmail());
+/*    @PatchMapping("/amazonId")
+    public ResponseEntity<?> updateUserAmazonId(@RequestBody
+    UserUpdateAmazonIdDTO userUpdateAmazonIdDTO) {
+        userService.updateUserAmazonId(
+            userUpdateAmazonIdDTO.getOldAmazonId(),
+            userUpdateAmazonIdDTO.getNewAmazonId()
+        );
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Usuário atualizado"));
     }
+ */
 
     @PatchMapping("/budget")
-    public ResponseEntity<?> updateUserBudget(@RequestBody UserUpdateBudgetDTO userUpdateBudgetDTO) {
+    public ResponseEntity<?> updateUserBudget(
+        @RequestBody UserUpdateBudgetDTO userUpdateBudgetDTO
+    ) {
         userService.updateUserBudget(userUpdateBudgetDTO);
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Orçamento atualizado"));
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<?> findUserByEmail(@PathVariable("email") String email) {
+    @GetMapping("/{amazonId}")
+    public ResponseEntity<?> findUserByEmail(@PathVariable("amazonId") String amazonId) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new UserResponse(userService.findUserByEmail(email)));
+                .body(new UserResponse(userService.findUserByAmazonId(amazonId)));
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<?> deleteUserByEmail(@PathVariable("email") String email) {
-        userService.deleteUserByEmail(email);
+    @DeleteMapping("/{amazonId}")
+    public ResponseEntity<?> deleteUserByEmail(@PathVariable("amazonId") String amazonId) {
+        userService.deleteUserByAmazonId(amazonId);
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, "Conta deletada"));
     }
 }
