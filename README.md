@@ -64,12 +64,11 @@ DATABASE_USERNAME
 
 - **[3.1 Criar Usuário](#post-criar-usuário)**
 - **[3.2 Deletar Usuário](#delete-endpoint-deletar-usuário)**
-- **[3.3 Atualizar email do usuário](#patch-atualizar-email-do-usuário)**
-- **[3.4 Encontrar usuário por e-mail](#get-encontrar-um-usuário-por-e-mail)**
+- **[3.3 Encontrar usuário por amazonId](#get-encontrar-um-usuário-por-amazonid)**
 
 **[4. Endpoints-Categorias](#categorias)**
 
-- **[4.1 Encontrar categorias por e-mail](#get-encontrar-todas-as-categorias-de-um-usuário)**
+- **[4.1 Encontrar categorias por amazonId](#get-encontrar-todas-as-categorias-de-um-usuário)**
 - **[4.2 Criar categoria](#post-criar-categoria)**
 - **[4.3 Atualizar orçamento de uma categoria](#patch-atualizar-orçamento-de-uma-categoria)**
 
@@ -97,7 +96,7 @@ https://meu-controle-financeiro-161352531094.herokuapp.com
 > Exemplo: 
 >  ```
 >  {
->    "email": "teste@gmail.com",
+>    "amazonId": "ABCDEF",
 >    "senha": "senha123"
 >  }
 >  ```
@@ -136,14 +135,14 @@ nomes das variáveis e seus valores
 >
 > ```
 > {
->  "email": "testeCategoria@gmail.com"
+>  "amazonId": "ABCDEF"
 > }
 > ```
 
 ### `DELETE` Endpoint Deletar usuário
 
 > ```
-> /api/user/{email}
+> /api/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -154,27 +153,10 @@ nomes das variáveis e seus valores
 > /api/user/"testeCategoria@gmail.com"
 > ```
 
-### `PATCH` Atualizar email do usuário
+### `GET` Encontrar um usuário por amazonId
 
 > ```
-> /api/user/
-> ```
->
-> Exemplo de utilização
->
-> _@RequestBody_
->
-> ```
-> {
-> "oldEmail" : "testeCategoria@gmail.com",
-> "newEmail" : "food3@gmail.com.br"
-> }
-> ```
-
-### `GET` Encontrar um usuário por e-mail
-
-> ```
-> /api/user/{email}
+> /api/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -182,7 +164,7 @@ nomes das variáveis e seus valores
 > _@PathVariable_
 >
 > ```
-> /api/user/testeCategoria@gmail.com
+> /api/user/ABCDEF
 > ```
 
 ## Categorias
@@ -190,7 +172,7 @@ nomes das variáveis e seus valores
 ### `GET` Encontrar todas as categorias de um usuário
 
 > ```
-> /api/category/user/{email}
+> /api/category/user/{amazonId}
 > ```
 >
 > Exemplo de utilização
@@ -214,7 +196,7 @@ nomes das variáveis e seus valores
 > ```
 > {
 > 	"name": "categoria3",
-> 	"email": "testeCategoria@gmail.com"
+> 	"amazonId": "ABCDEF"
 > }
 > ```
 
@@ -256,7 +238,7 @@ nomes das variáveis e seus valores
 > "date": "2023-02-05T10:36:40-03:00",
 > "type": "EXPENSE",
 > "category": "categoria",
-> "email": "testeCategoria@gmail.com"
+> "amazonId": "ABCDEF"
 > }
 > ```
 
@@ -272,7 +254,7 @@ nomes das variáveis e seus valores
 >
 > ```
 > currentDate: 2023-02-02T10:36:40-03:00,
-> userEmail: "testeCategoria@gmail.com"
+> amazonId: "ABCDEF"
 > ```
 
 ### `GET` Encontrar gastos em um período específico
@@ -288,7 +270,7 @@ nomes das variáveis e seus valores
 > ```
 > dateStart: 2018-09-28T10:36:40-03:00,
 > dateEnd: 2020-11-29T10:36:40-03:00,
-> email: email@email.com
+> amazonId: ABCDEF
 > ```
 
 ### `GET` Encontrar gastos em um período específico e por tipo de gasto específico
@@ -307,7 +289,7 @@ nomes das variáveis e seus valores
 > ```
 > dateStart: 2018-09-28T10:36:40-03:00,
 > dateEnd: 2020-11-29T10:36:40-03:00,
-> email: email@email.com
+> amazonId: ABCDEF
 > ```
 
 ### `GET` Encontrar gastos no período de um mês de uma categoria especificada
@@ -333,15 +315,15 @@ nomes das variáveis e seus valores
 - Descrição: Usuário pode adicionar um gasto ou um embolso, informando com o
   que foi gasto e em que categoria esse se encontra
 - Prioridade: Alta
-- Entrada: Email do usuário, tipo de transação (INCOME, EXPENSE), categoria, título, data e custo.
+- Entrada: amazonId do usuário, tipo de transação (INCOME, EXPENSE), categoria, título, data e custo.
 - Saída: Confirmação do sucesso da adição da transação.
 
 **RF 002 - Verificar gasto mensal**
 
 - Descrição: - Usuário pode solicitar o quanto já foi gasto no mês levando em consideração o dinheiro que entrou e saiu
 - Prioridade: Alta
-- Entrada: Email do usuário e data atual
-- Saída: Retorna o email do usuário e o total gasto no mês
+- Entrada: amazonId do usuário e data atual
+- Saída: Retorna o amazonId do usuário e o total gasto no mês
 
 **RF 003 - Definir orçamento**
 
@@ -354,28 +336,28 @@ nomes das variáveis e seus valores
 
 - Descrição: Usuário pode criar uma categoria para adicionar transações a essa categoria
 - Prioridade: Média
-- Entrada: Email do usuário e nome da categoria
+- Entrada: AmazonId do usuário e nome da categoria
 - Saída: Não possue saída
 
 **RF 005 - Definir orçamento para categoria**
 
 - Descrição: Usuário pode definir um orçamento para uma categoria especifica
 - Prioridade: Média
-- Entrada: Email do usuário, nome da categoria e orçamento
+- Entrada: AmazonId do usuário, nome da categoria e orçamento
 - Saída: Não possue saída
 
 **RF 006 - Recuperar saldo de uma categoria**
 
 - Descrição: Usuário pode resgatar os gastos realizados em uma determinada categoria
 - Prioridade: Média
-- Entrada: Email do usuário e nome da categoria
+- Entrada: AmazonId do usuário e nome da categoria
 - Saída: Retorna o saldo da categoria solicitada
 
 **RF 007 - Cadastrar usuário**
 
-- Descrição: Usuário pode cadastrar seu email que está associado ao dispositivo Alexa
+- Descrição: Usuário pode cadastrar seu amazonId que está associado ao dispositivo Alexa
 - Prioridade: Baixa
-- Entrada: Email do usuário
+- Entrada: AmazonId do usuário
 - Saída: Não possue saída
 
 ## To-do
