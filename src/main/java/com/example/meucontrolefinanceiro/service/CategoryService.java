@@ -8,6 +8,9 @@ import com.example.meucontrolefinanceiro.repository.CategoryRepository;
 import com.example.meucontrolefinanceiro.utils.exceptions.CategoryNotFoundException;
 
 import java.util.List;
+
+import com.example.meucontrolefinanceiro.utils.exceptions.ExistentAccountException;
+import com.example.meucontrolefinanceiro.utils.exceptions.ExistentCategoryException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,14 @@ public class CategoryService {
 
   public Category createCategory(UserCategoryDTO userCategoryDTO) {
     User user = userService.findUserByAmazonId(userCategoryDTO.getAmazonId());
+
+    Category category  = categoryRepository.findByNameAndUserAmazonId(
+            userCategoryDTO.getName(),
+            userCategoryDTO.getAmazonId());
+
+    if (category != null) {
+      throw new ExistentCategoryException("Já existe uma categoria com esse nome");
+    }
 
     Category categoryModel = new Category();
     BeanUtils.copyProperties(userCategoryDTO, categoryModel);
